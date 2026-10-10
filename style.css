@@ -1,0 +1,394 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #18251b;
+}
+
+.settings-toggle {
+  position: fixed;
+  z-index: 12;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 3px solid #4c2815;
+  border-radius: 50%;
+  color: #fff4d5;
+  background: linear-gradient(#8b542e, #63371f);
+  box-shadow: 0 3px 0 #3e2316, 0 4px 9px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font: 700 25px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.settings-toggle:hover,
+.settings-toggle:focus-visible {
+  filter: brightness(1.15);
+  outline: 2px solid #fff0b9;
+}
+
+.settings-overlay {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 74px 18px 18px;
+  background: rgba(10, 16, 11, 0.38);
+}
+
+.settings-overlay[hidden] {
+  display: none;
+}
+
+.settings-panel {
+  width: min(300px, calc(100vw - 36px));
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+  padding: 16px;
+  border: 3px solid #4c2815;
+  border-radius: 12px;
+  color: #fff4df;
+  background: linear-gradient(145deg, #81502e, #56341f);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font: 14px/1.45 system-ui, sans-serif;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 14px;
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.settings-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 244, 223, 0.5);
+  border-radius: 7px;
+  color: #fff4df;
+  background: rgba(30, 18, 11, 0.3);
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.settings-controls {
+  padding: 12px;
+  border: 1px solid rgba(255, 244, 223, 0.23);
+  border-radius: 8px;
+  background: rgba(28, 18, 11, 0.2);
+}
+
+.settings-controls p {
+  margin: 7px 0 0;
+}
+
+.camera-settings {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 244, 223, 0.23);
+  border-radius: 8px;
+  background: rgba(28, 18, 11, 0.2);
+}
+
+.camera-zoom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.camera-zoom-row input {
+  width: 100%;
+  accent-color: #f0c765;
+}
+
+.camera-zoom-row output {
+  min-width: 38px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.camera-settings p {
+  margin: 6px 0 0;
+  color: rgba(255, 244, 223, 0.82);
+  font-size: 12px;
+}
+
+.fullscreen-toggle {
+  width: 100%;
+  margin-top: 14px;
+  padding: 9px 12px;
+  border: 2px solid #3e2818;
+  border-radius: 8px;
+  color: #fff7e6;
+  background: #6e4429;
+  font: 600 14px system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.settings-close:hover,
+.fullscreen-toggle:hover {
+  filter: brightness(1.16);
+}
+
+.scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: min(100vw, 150vh);
+  aspect-ratio: 3 / 2;
+  transform: translate(0, 0);
+  transform-origin: top left;
+}
+
+.map {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pond-fish-school {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 67%;
+  width: 19%;
+  height: 24%;
+  clip-path: polygon(12% 17%, 23% 7%, 40% 3%, 68% 4%, 83% 10%, 93% 24%, 97% 42%, 94% 67%, 85% 82%, 70% 92%, 40% 96%, 22% 91%, 10% 81%, 3% 66%, 0 45%, 5% 29%);
+  pointer-events: none;
+}
+
+.pond-fish-school[hidden] {
+  display: none;
+}
+
+.pond-fish {
+  position: absolute;
+  width: 20px;
+  height: auto;
+  image-rendering: pixelated;
+  opacity: 0.74;
+  filter: brightness(0.78) saturate(0.72) hue-rotate(8deg) blur(0.35px) drop-shadow(0 1px 3px rgba(24, 116, 218, 0.68));
+  animation: pond-fish-swim var(--fish-duration, 6s) ease-in-out var(--fish-delay, 0s) infinite;
+}
+
+.fish-two {
+  left: 50%;
+  top: 18%;
+}
+
+.fish-three {
+  left: 47%;
+  top: 48%;
+}
+
+@keyframes pond-fish-swim {
+  0%, 100% {
+    transform: translate(0, 0) scaleX(var(--fish-start-scale, 1)) rotate(-2deg);
+  }
+  42% {
+    transform: translate(var(--fish-swim-distance, 12px), -2px) scaleX(var(--fish-start-scale, 1)) rotate(2deg);
+  }
+  50% {
+    transform: translate(var(--fish-swim-distance, 12px), 0) scaleX(0.08);
+  }
+  58% {
+    transform: translate(var(--fish-swim-distance, 12px), -2px) scaleX(var(--fish-opposite-scale, -1)) rotate(-2deg);
+  }
+  90% {
+    transform: translate(0, 0) scaleX(var(--fish-opposite-scale, -1)) rotate(2deg);
+  }
+  96% {
+    transform: translate(0, 0) scaleX(0.08);
+  }
+}
+
+.move-marker {
+  position: absolute;
+  z-index: 4;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -100%);
+  transform-origin: center bottom;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(255, 224, 75, 0.9));
+  animation: move-marker-pulse 1.15s ease-in-out infinite;
+}
+
+.move-marker[hidden] {
+  display: none;
+}
+
+@keyframes move-marker-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -100%) translateY(0) scale(1);
+    filter: drop-shadow(0 0 3px rgba(255, 224, 75, 0.72));
+  }
+  50% {
+    transform: translate(-50%, -100%) translateY(-4px) scale(1.06);
+    filter: drop-shadow(0 0 9px rgba(255, 241, 127, 1));
+  }
+}
+
+.zone-select {
+  position: absolute;
+  z-index: 2;
+  left: 35.2%;
+  top: 9.8%;
+  width: 13.2%;
+  height: 18.5%;
+  border-radius: 9px;
+  transform-origin: center;
+  pointer-events: none;
+  background:
+    linear-gradient(#fff0a1, #ffc94d) left top / 24px 4px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) left top / 4px 24px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) right top / 24px 4px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) right top / 4px 24px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) left bottom / 24px 4px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) left bottom / 4px 24px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) right bottom / 24px 4px no-repeat,
+    linear-gradient(#fff0a1, #ffc94d) right bottom / 4px 24px no-repeat;
+  filter: drop-shadow(0 0 5px rgba(255, 219, 95, 0.95));
+  animation: select-zone-glow 1.45s ease-in-out infinite alternate;
+}
+
+.zone-menu {
+  position: absolute;
+  z-index: 5;
+  left: 41.4%;
+  top: 31%;
+  width: 220px;
+  padding: 12px;
+  transform: translateX(-50%) scale(var(--camera-ui-scale, 1));
+  transform-origin: top center;
+  border: 3px solid #4c2815;
+  border-radius: 10px;
+  color: #fff4df;
+  background: linear-gradient(145deg, #81502e, #56341f);
+  box-shadow: 0 5px 0 #3e2316, 0 8px 18px rgba(20, 14, 8, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font: 600 14px/1.35 system-ui, sans-serif;
+  text-align: center;
+}
+
+.zone-menu.is-exit {
+  left: 50%;
+  top: 66%;
+}
+
+.zone-select.is-exit-select {
+  left: 44.5%;
+  top: 79%;
+  width: 11%;
+  height: 21%;
+}
+
+.zone-menu p {
+  margin: 0 0 10px;
+}
+
+.zone-menu-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.zone-menu-actions button {
+  min-width: 82px;
+  padding: 7px 10px;
+  border: 2px solid #3e2818;
+  border-radius: 7px;
+  color: #fff7e6;
+  background: #6e4429;
+  font: 700 12px system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.zone-menu-actions button:first-child {
+  background: #4d7130;
+}
+
+.zone-menu-actions button:hover,
+.zone-menu-actions button:focus-visible {
+  filter: brightness(1.2);
+  outline: 2px solid #fff0b9;
+}
+
+@keyframes select-zone-glow {
+  from {
+    opacity: 0.72;
+    transform: scale(0.94);
+    filter: drop-shadow(0 0 3px rgba(255, 211, 70, 0.75));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 10px rgba(255, 236, 144, 1));
+  }
+}
+
+.zone-select[hidden],
+.zone-menu[hidden] {
+  display: none;
+}
+
+#farm-lv1-sign {
+  --nameplate-x: 41.4%;
+  --nameplate-y: 18.7%;
+}
+
+.farm-exit-sign {
+  --nameplate-x: 50%;
+  --nameplate-y: 75.5%;
+}
+
+.character {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  top: 34%;
+  left: 50%;
+  width: 96px;
+  height: 96px;
+  transform: translate(-50%, -50%);
+  background-image: url("characters/main-character/idle.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.character.is-walking {
+  transform: translate(-50%, -50%) scale(0.74);
+  background-image: url("characters/main-character/walk-sheet.png?v=8");
+  background-size: 600% 400%;
+  background-position: var(--frame-x, 0%) var(--frame-y, 0%);
+}
+

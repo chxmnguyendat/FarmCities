@@ -1,0 +1,13 @@
+{
+  "format": "farm-walk-sheet.v1",
+  "image": "walk-sheet.png",
+  "art_source": "host_image",
+  "sheet_size": [1536, 1024],
+  "frame_size": [256, 256],
+  "columns": 6,
+  "rows": 4,
+  "frames_per_direction": 6,
+  "walk_fps": 10,
+  "row_order": ["down", "up", "right", "left"],
+  "background": "transparent"
+}

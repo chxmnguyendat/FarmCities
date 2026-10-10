@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css?v=45">
+  <link rel="stylesheet" href="effects/nameplate.css?v=4">
+</head>
+<body>
+  <button id="settings-toggle" class="settings-toggle" type="button" aria-label="C&#224;i &#273;&#7863;t" aria-expanded="false" aria-controls="settings-panel">&#9881;</button>
+  <div id="settings-overlay" class="settings-overlay" hidden>
+    <section id="settings-panel" class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <header class="settings-header">
+        <h2 id="settings-title">C&#224;i &#273;&#7863;t</h2>
+        <button id="settings-close" class="settings-close" type="button" aria-label="&#272;&#243;ng">&times;</button>
+      </header>
+      <div class="settings-controls">
+        <strong>&#272;i&#7873;u khi&#7875;n</strong>
+        <p>Di chuy&#7875;n: ph&#237;m m&#361;i t&#234;n ho&#7863;c nh&#7845;n v&#224;o map &#273;&#7875; t&#7921; &#273;i</p>
+        <p>Quay l&#7841;i map ch&#237;nh: Esc</p>
+      </div>
+      <div class="camera-settings">
+        <label for="camera-zoom">Camera</label>
+        <div class="camera-zoom-row">
+          <input id="camera-zoom" type="range" min="1" max="2.4" step="0.1" value="1.4">
+          <output id="camera-zoom-value" for="camera-zoom">1.4×</output>
+        </div>
+        <p>Thu ph&#243;ng g&#243;c nh&#236;n; camera b&#225;m theo nh&#226;n v&#7853;t khi ph&#243;ng to.</p>
+      </div>
+      <button id="fullscreen-toggle" class="fullscreen-toggle" type="button">B&#7853;t to&#224;n m&#224;n h&#236;nh</button>
+    </section>
+  </div>
+  <main class="scene">
+    <div class="world">
+      <img id="farm-map" class="map" src="map/main-map.png?v=4" alt="">
+      <div id="pond-fish-school" class="pond-fish-school" aria-hidden="true">
+        <img class="pond-fish fish-two" src="assets/fish-pixel-green.png" alt="">
+        <img class="pond-fish fish-three" src="assets/fish-pixel-blue.png" alt="">
+      </div>
+      <div id="farm-lv1-sign" class="zone-sign">
+        <span>Farm LV1</span>
+      </div>
+      <div id="farm-exit-sign" class="zone-sign farm-exit-sign" hidden>
+        <span>Tr&#7903; v&#7873; nh&#224;!</span>
+      </div>
+      <div id="farm-lv1-select" class="zone-select" aria-hidden="true" hidden></div>
+      <div id="farm-lv1-menu" class="zone-menu" role="group" aria-label="X&#225;c nh&#7853;n &#273;&#7871;n Farm LV1" hidden>
+        <p id="farm-lv1-menu-prompt">B&#7841;n mu&#7889;n &#273;&#7871;n Farm LV1?</p>
+        <div class="zone-menu-actions">
+          <button id="farm-lv1-confirm" type="button">Ti&#7871;p t&#7909;c</button>
+          <button id="farm-lv1-cancel" type="button">Tr&#7903; l&#7841;i</button>
+        </div>
+      </div>
+      <div id="player-character" class="character" role="img" aria-label="Nhân vật chính"></div>
+      <img id="move-marker" class="move-marker" src="assets/click-marker.png" alt="" aria-hidden="true" hidden>
+    </div>
+  </main>
+  <script src="map/fence-collision.js?v=4" defer></script>
+  <script src="pathfinding.js?v=1" defer></script>
+  <script src="script.js?v=22" defer></script>
+  <script src="camera.js?v=3" defer></script>
+</body>
+</html>

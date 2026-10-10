@@ -1,0 +1,28 @@
+{
+  "format": "farm-map.v1",
+  "name": "Farmlv1",
+  "art_source": "api (image_gen)",
+  "coordinate_space": {
+    "width": 1536,
+    "height": 1024,
+    "origin": "top-left"
+  },
+  "layers": {
+    "background": "map.png"
+  },
+  "features": {
+    "terrain": ["grass", "tilled soil", "cobblestone path"],
+    "crop_beds": 11,
+    "fences_block_movement": false
+  },
+  "spawn": { "x": 768, "y": 930 },
+  "return_to_main": {
+    "interaction": "click or Escape",
+    "bounds": { "x": 684, "y": 809, "width": 169, "height": 215 },
+    "arrival": { "x": 640, "y": 322 }
+  },
+  "collision": {
+    "map_bounds_block_movement": true,
+    "obstacles": []
+  }
+}

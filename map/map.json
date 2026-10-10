@@ -1,0 +1,30 @@
+{
+  "format": "farm-map.v1",
+  "name": "main-farm-map",
+  "art_source": "file-png/farmstead.png",
+  "coordinate_space": {
+    "width": 1536,
+    "height": 1024,
+    "origin": "top-left"
+  },
+  "layers": {
+    "background": "main-map.png",
+    "collision_script": "fence-collision.js"
+  },
+  "features": {
+    "crop_regions": "planted crop beds, orchards, and livestock areas",
+    "fences_block_movement": true,
+    "fence_collision_default_radius": 8,
+    "pond_collision": true,
+    "pond_bridge": true
+  },
+  "portals": [
+    {
+      "id": "Farmlv1",
+      "target": "Farmlv1/map.json",
+      "interaction": "click",
+      "bounds": { "x": 535, "y": 97, "width": 203, "height": 189 },
+      "arrival": { "x": 768, "y": 930 }
+    }
+  ]
+}

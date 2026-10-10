@@ -1,0 +1,33 @@
+/* Reusable floating wooden nameplate styling for map labels. */
+.zone-sign {
+  position: absolute;
+  z-index: 2;
+  left: var(--nameplate-x, 50%);
+  top: var(--nameplate-y, 50%);
+  transform: translate(-50%, -50%) scale(var(--camera-ui-scale, 1));
+  transform-origin: center;
+  padding: 5px 8px;
+  border: 2px solid #4c2815;
+  border-radius: 6px;
+  color: #fff;
+  background: linear-gradient(#8b542e, #63371f);
+  box-shadow: 0 2px 0 #3e2316, 0 4px 6px rgba(39, 25, 10, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font: 700 11px/1.1 system-ui, sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: nameplate-float 2s ease-in-out infinite;
+}
+
+.zone-sign[hidden] {
+  display: none;
+}
+
+@keyframes nameplate-float {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: -5px;
+  }
+}
