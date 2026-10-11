@@ -14,8 +14,17 @@
   const isTouchDevice = Boolean(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
   const isNarrowDevice = window.screen ? window.screen.width <= 700 : window.innerWidth <= 700;
   const isPhoneDevice = isTouchDevice || isNarrowDevice;
-  const zoomStorageKey = isPhoneDevice ? "farmcities-camera-zoom-mobile" : "farmcities-camera-zoom";
-  const defaultZoom = isPhoneDevice ? 1 : desktopDefaultZoom;
+  const zoomStorageKey = isPhoneDevice ? "farmcities-camera-zoom-mobile-landscape" : "farmcities-camera-zoom";
+  const defaultZoom = desktopDefaultZoom;
+  const orientationGate = document.getElementById("orientation-gate");
+  const portraitQuery = window.matchMedia ? window.matchMedia("(orientation: portrait)") : null;
+
+  function updateOrientationGate() {
+    const blocked = isPhoneDevice && Boolean(portraitQuery && portraitQuery.matches);
+    document.documentElement.classList.toggle("is-phone-portrait", blocked);
+    window.farmOrientationBlocked = blocked;
+    if (orientationGate) orientationGate.hidden = !blocked;
+  }
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -55,16 +64,10 @@
     world.style.width = worldWidth + "px";
     world.style.height = worldHeight + "px";
     world.style.setProperty("--camera-ui-scale", String(1 / zoom));
-    // Phone browsers can report a wider CSS viewport (for example, with desktop mode enabled),
-    // so include touch input when deciding whether to shrink prominent game sprites.
-    const hasCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    const isPhoneLayout = viewportWidth <= 700 || hasCoarsePointer || isPhoneDevice;
-    const mobileEntityScale = isPhoneLayout
-      ? clamp(Math.min(viewportWidth, 700) / 800, 0.4, 0.55)
-      : 1;
-    world.style.setProperty("--mobile-entity-scale", String(mobileEntityScale));
-    world.style.setProperty("--mobile-fish-size", (20 * mobileEntityScale) + "px");
-    world.style.setProperty("--mobile-marker-size", (18 * mobileEntityScale) + "px");
+    // Landscape lets the phone use the same map-relative sprite sizes as desktop.
+    world.style.setProperty("--mobile-entity-scale", "1");
+    world.style.setProperty("--mobile-fish-size", "20px");
+    world.style.setProperty("--mobile-marker-size", "18px");
 
     const playerScreenX = playerX / playerMapWidth * scaledWidth;
     const playerScreenY = playerY / playerMapHeight * scaledHeight;
@@ -98,9 +101,16 @@
     setZoom(zoomInput.value);
   });
   window.addEventListener("resize", function () {
+    updateOrientationGate();
     update(playerX, playerY, playerMapWidth, playerMapHeight);
   });
+  window.addEventListener("orientationchange", updateOrientationGate);
+  if (portraitQuery) {
+    if (portraitQuery.addEventListener) portraitQuery.addEventListener("change", updateOrientationGate);
+    else if (portraitQuery.addListener) portraitQuery.addListener(updateOrientationGate);
+  }
 
+  updateOrientationGate();
   window.farmCamera = Object.freeze({ update: update, setZoom: setZoom });
   if (window.farmGame && typeof window.farmGame.getPlayerPosition === "function") {
     const position = window.farmGame.getPlayerPosition();

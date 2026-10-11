@@ -3,10 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css?v=48">
+  <link rel="stylesheet" href="style.css?v=49">
   <link rel="stylesheet" href="effects/nameplate.css?v=7">
 </head>
 <body>
+  <section id="orientation-gate" class="orientation-gate" hidden role="status" aria-live="polite">
+    <div class="orientation-message">
+      <div class="orientation-icon" aria-hidden="true"><span>&#8635;</span></div>
+      <h1>H&#227;y xoay ngang &#273;i&#7879;n tho&#7841;i</h1>
+      <p>Farm Cities c&#7847;n m&#224;n h&#236;nh ngang &#273;&#7875; hi&#7875;n th&#7883; tr&#7885;n v&#7865;n.</p>
+    </div>
+  </section>
   <button id="settings-toggle" class="settings-toggle" type="button" aria-label="C&#224;i &#273;&#7863;t" aria-expanded="false" aria-controls="settings-panel">&#9881;</button>
   <div id="settings-overlay" class="settings-overlay" hidden>
     <section id="settings-panel" class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
@@ -58,6 +65,6 @@
   <script src="map/fence-collision.js?v=4" defer></script>
   <script src="pathfinding.js?v=1" defer></script>
   <script src="script.js?v=22" defer></script>
-  <script src="camera.js?v=7" defer></script>
+  <script src="camera.js?v=8" defer></script>
 </body>
 </html>
