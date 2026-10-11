@@ -304,10 +304,6 @@
   function frame(now) {
     const elapsed = Math.min((now - previousFrame) / 1000, 0.05);
     previousFrame = now;
-    if (window.farmOrientationBlocked) {
-      requestAnimationFrame(frame);
-      return;
-    }
 
     let dx = (Number(keys.has("right")) - Number(keys.has("left"))) * moveSpeed * elapsed;
     let dy = (Number(keys.has("down")) - Number(keys.has("up"))) * moveSpeed * elapsed;
