@@ -55,7 +55,7 @@
     const hasCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
     const isPhoneLayout = viewportWidth <= 700 || hasCoarsePointer;
     const mobileEntityScale = isPhoneLayout
-      ? clamp(Math.min(viewportWidth, 560) / 560, 0.58, 0.72)
+      ? clamp(Math.min(viewportWidth, 700) / 800, 0.4, 0.55)
       : 1;
     world.style.setProperty("--mobile-entity-scale", String(mobileEntityScale));
     world.style.setProperty("--mobile-fish-size", (20 * mobileEntityScale) + "px");
