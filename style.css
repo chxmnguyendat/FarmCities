@@ -192,7 +192,7 @@ body {
 
 .pond-fish {
   position: absolute;
-  width: 20px;
+  width: calc(20px * var(--mobile-entity-scale, 1));
   height: auto;
   image-rendering: pixelated;
   opacity: 0.74;
@@ -234,8 +234,8 @@ body {
 .move-marker {
   position: absolute;
   z-index: 4;
-  width: 18px;
-  height: 18px;
+  width: calc(18px * var(--mobile-entity-scale, 1));
+  height: calc(18px * var(--mobile-entity-scale, 1));
   transform: translate(-50%, -100%);
   transform-origin: center bottom;
   pointer-events: none;
@@ -289,7 +289,7 @@ body {
   top: 31%;
   width: 220px;
   padding: 12px;
-  transform: translateX(-50%) scale(var(--camera-ui-scale, 1));
+  transform: translateX(-50%) scale(calc(var(--camera-ui-scale, 1) * var(--mobile-entity-scale, 1)));
   transform-origin: top center;
   border: 3px solid #4c2815;
   border-radius: 10px;
@@ -379,14 +379,14 @@ body {
   left: 50%;
   width: 96px;
   height: 96px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--mobile-entity-scale, 1));
   background-image: url("characters/main-character/idle.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 .character.is-walking {
-  transform: translate(-50%, -50%) scale(0.74);
+  transform: translate(-50%, -50%) scale(calc(0.74 * var(--mobile-entity-scale, 1)));
   background-image: url("characters/main-character/walk-sheet.png?v=8");
   background-size: 600% 400%;
   background-position: var(--frame-x, 0%) var(--frame-y, 0%);

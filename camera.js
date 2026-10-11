@@ -50,6 +50,11 @@
     world.style.width = worldWidth + "px";
     world.style.height = worldHeight + "px";
     world.style.setProperty("--camera-ui-scale", String(1 / zoom));
+    // Scale prominent world sprites down on narrow phone screens while leaving desktop unchanged.
+    const mobileEntityScale = viewportWidth <= 600
+      ? clamp(viewportWidth / 480, 0.68, 0.9)
+      : 1;
+    world.style.setProperty("--mobile-entity-scale", String(mobileEntityScale));
 
     const playerScreenX = playerX / playerMapWidth * scaledWidth;
     const playerScreenY = playerY / playerMapHeight * scaledHeight;
