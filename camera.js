@@ -10,7 +10,12 @@
 
   const mapWidth = 1536;
   const mapHeight = 1024;
-  const DEFAULT_ZOOM = 1.4;
+  const desktopDefaultZoom = 1.4;
+  const isTouchDevice = Boolean(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+  const isNarrowDevice = window.screen ? window.screen.width <= 700 : window.innerWidth <= 700;
+  const isPhoneDevice = isTouchDevice || isNarrowDevice;
+  const zoomStorageKey = isPhoneDevice ? "farmcities-camera-zoom-mobile" : "farmcities-camera-zoom";
+  const defaultZoom = isPhoneDevice ? 1 : desktopDefaultZoom;
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -18,12 +23,12 @@
 
   function readSavedZoom() {
     try {
-      const saved = localStorage.getItem("farmcities-camera-zoom");
-      if (saved === null) return DEFAULT_ZOOM;
+      const saved = localStorage.getItem(zoomStorageKey);
+      if (saved === null) return defaultZoom;
       const value = Number(saved);
-      return Number.isFinite(value) ? value : DEFAULT_ZOOM;
+      return Number.isFinite(value) ? value : defaultZoom;
     } catch (error) {
-      return DEFAULT_ZOOM;
+      return defaultZoom;
     }
   }
 
@@ -53,7 +58,7 @@
     // Phone browsers can report a wider CSS viewport (for example, with desktop mode enabled),
     // so include touch input when deciding whether to shrink prominent game sprites.
     const hasCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    const isPhoneLayout = viewportWidth <= 700 || hasCoarsePointer;
+    const isPhoneLayout = viewportWidth <= 700 || hasCoarsePointer || isPhoneDevice;
     const mobileEntityScale = isPhoneLayout
       ? clamp(Math.min(viewportWidth, 700) / 800, 0.4, 0.55)
       : 1;
@@ -75,13 +80,13 @@
 
   function setZoom(value, save) {
     const parsed = Number(value);
-    zoom = clamp(Number.isFinite(parsed) ? parsed : DEFAULT_ZOOM, Number(zoomInput.min), Number(zoomInput.max));
+    zoom = clamp(Number.isFinite(parsed) ? parsed : defaultZoom, Number(zoomInput.min), Number(zoomInput.max));
     zoomInput.value = String(zoom);
     zoomOutput.value = zoom.toFixed(1) + "×";
     zoomOutput.textContent = zoom.toFixed(1) + "×";
     if (save !== false) {
       try {
-        localStorage.setItem("farmcities-camera-zoom", String(zoom));
+        localStorage.setItem(zoomStorageKey, String(zoom));
       } catch (error) {
         // Keep the camera functional when browser storage is unavailable.
       }
