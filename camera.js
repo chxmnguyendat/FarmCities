@@ -50,11 +50,16 @@
     world.style.width = worldWidth + "px";
     world.style.height = worldHeight + "px";
     world.style.setProperty("--camera-ui-scale", String(1 / zoom));
-    // Scale prominent world sprites down on narrow phone screens while leaving desktop unchanged.
-    const mobileEntityScale = viewportWidth <= 600
-      ? clamp(viewportWidth / 480, 0.68, 0.9)
+    // Phone browsers can report a wider CSS viewport (for example, with desktop mode enabled),
+    // so include touch input when deciding whether to shrink prominent game sprites.
+    const hasCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    const isPhoneLayout = viewportWidth <= 700 || hasCoarsePointer;
+    const mobileEntityScale = isPhoneLayout
+      ? clamp(Math.min(viewportWidth, 560) / 560, 0.58, 0.72)
       : 1;
     world.style.setProperty("--mobile-entity-scale", String(mobileEntityScale));
+    world.style.setProperty("--mobile-fish-size", (20 * mobileEntityScale) + "px");
+    world.style.setProperty("--mobile-marker-size", (18 * mobileEntityScale) + "px");
 
     const playerScreenX = playerX / playerMapWidth * scaledWidth;
     const playerScreenY = playerY / playerMapHeight * scaledHeight;
